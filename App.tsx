@@ -58,7 +58,6 @@ const App: React.FC = () => {
     setCurrentUser(null);
     localStorage.removeItem('ostazi_auth');
     localStorage.removeItem('ostazi_user');
-    localStorage.removeItem('ostazi_appointments'); // Optional: keep or clear appointments
     setView('search');
   };
 
@@ -148,7 +147,6 @@ const App: React.FC = () => {
       <div className="flex-1">
         {view === 'search' ? (
           <main>
-            {/* Hero Section */}
             <section className="bg-indigo-900 text-white py-20 px-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
               <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -185,7 +183,6 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* AI Recommendation */}
             {aiRecommendation && (
               <div className="max-w-4xl mx-auto mt-[-30px] relative z-20 px-4">
                 <div className="bg-white p-6 rounded-3xl shadow-2xl border-2 border-indigo-500 flex items-start gap-4 animate-in slide-in-from-top duration-500">
@@ -203,24 +200,12 @@ const App: React.FC = () => {
               </div>
             )}
 
-            {/* Main Content */}
             <section className="max-w-7xl mx-auto px-4 py-16">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div className="flex flex-wrap gap-2">
-                  <button 
-                    onClick={() => setSelectedSubject('الكل')}
-                    className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${selectedSubject === 'الكل' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-gray-500 border border-gray-100 hover:border-indigo-200 hover:text-indigo-600'}`}
-                  >
-                    الكل
-                  </button>
+                  <button onClick={() => setSelectedSubject('الكل')} className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${selectedSubject === 'الكل' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-gray-500 border border-gray-100 hover:border-indigo-200 hover:text-indigo-600'}`}>الكل</button>
                   {SUBJECTS.map(s => (
-                    <button 
-                      key={s}
-                      onClick={() => setSelectedSubject(s)}
-                      className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${selectedSubject === s ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-gray-500 border border-gray-100 hover:border-indigo-200 hover:text-indigo-600'}`}
-                    >
-                      {s}
-                    </button>
+                    <button key={s} onClick={() => setSelectedSubject(s)} className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${selectedSubject === s ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white text-gray-500 border border-gray-100 hover:border-indigo-200 hover:text-indigo-600'}`}>{s}</button>
                   ))}
                 </div>
                 <div className="bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100">
@@ -231,12 +216,7 @@ const App: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredTutors.map(tutor => (
-                  <TutorCard 
-                    key={tutor.id} 
-                    tutor={tutor} 
-                    onBook={handleBookInitiate}
-                    isRecommended={aiRecommendation?.tutorId === tutor.id}
-                  />
+                  <TutorCard key={tutor.id} tutor={tutor} onBook={handleBookInitiate} isRecommended={aiRecommendation?.tutorId === tutor.id} />
                 ))}
               </div>
             </section>
@@ -249,51 +229,12 @@ const App: React.FC = () => {
       </div>
 
       {bookingTutor && (
-        <SchedulePicker 
-          tutor={bookingTutor} 
-          userBalance={currentUser.walletBalance}
-          onCancel={() => setBookingTutor(null)}
-          onConfirm={handleBookingConfirm}
-        />
+        <SchedulePicker tutor={bookingTutor} userBalance={currentUser.walletBalance} onCancel={() => setBookingTutor(null)} onConfirm={handleBookingConfirm} />
       )}
 
       <footer className="bg-white border-t py-16 px-4 mt-auto">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-2xl">أ</div>
-                <span className="text-3xl font-bold text-gray-900 font-tajawal">أستاذي</span>
-              </div>
-              <p className="text-gray-500 max-w-sm leading-relaxed">
-                المنصة التعليمية الرائدة في الوطن العربي التي تهدف إلى تمكين الطلاب وربطهم بنخبة من المعلمين المتميزين.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-6">روابط سريعة</h4>
-              <ul className="space-y-4 text-gray-500 text-sm">
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">عن أستاذي</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">الأسئلة الشائعة</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">قصص النجاح</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-6">الدعم</h4>
-              <ul className="space-y-4 text-gray-500 text-sm">
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">مركز المساعدة</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">تواصل معنا</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">انضم كمعلم</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-gray-400 text-sm font-medium italic font-tajawal">صُنع بحب في العالم العربي © 2025</p>
-            <div className="flex gap-4">
-              <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all cursor-pointer">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto text-center">
+           <p className="text-gray-400 text-sm font-medium font-tajawal">صُنع بحب في العالم العربي © 2025</p>
         </div>
       </footer>
     </div>

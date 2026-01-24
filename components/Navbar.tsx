@@ -50,21 +50,20 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onRoleToggle, onLogout, act
             
             <div className="h-8 w-px bg-gray-200"></div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
               <button 
                 onClick={() => onNavClick('profile')}
                 className={`flex items-center gap-2 p-1 pr-3 rounded-full border transition-all ${activeView === 'profile' ? 'border-indigo-600 ring-2 ring-indigo-50' : 'border-gray-100 hover:border-gray-300'}`}
               >
                 <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-gray-900">{user.name}</p>
-                  <p className="text-[10px] text-gray-400 capitalize">{user.role === 'student' ? 'حساب طالب' : 'حساب معلم'}</p>
+                  <p className="text-xs font-bold text-gray-900 leading-none">{user.name}</p>
                 </div>
                 <img src={user.avatar} className="w-8 h-8 rounded-full border border-gray-200" alt="Avatar" />
               </button>
 
               <button 
                 onClick={onLogout}
-                className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                className="text-gray-400 hover:text-red-500 transition-all"
                 title="تسجيل الخروج"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
